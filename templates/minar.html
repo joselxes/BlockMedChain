@@ -1,0 +1,73 @@
+{% extends "menu.html" %}
+{% block title %}
+Bienvenido
+
+{% endblock %}
+{% block body %}
+
+<p>guardar</p>
+
+
+  <div id="block">
+
+    {% for i in range(info|length) %}
+      <table>
+          <thead>
+            <tr>
+              <th >Block number:--indifenido--</th><th >Timestamp: --indifenido-- </th>
+            </tr>
+          </thead>
+          <tr>
+            <td>Previous Hash</td><td style="font-size: 10;">--indifenido--</td>
+          </tr>
+          <tr>
+            <td>Own Hash</td><td style="font-size: 10;">--indifenido--</td>
+          </tr>
+          <tr>
+            <td>Name</td><td >{{info[i]['name']}}</td>
+          </tr>
+          <tr>
+            <td>e-mail</td><td >{{info[i]['email']}}</td>
+          </tr>
+          <tr>
+            <td>phone</td><td >{{info[i]['phone']}}</td>
+          </tr>
+          <tr>
+            <td>cedula</td><td >{{info[i]['cedula']}}</td>
+          </tr>
+          <tr>
+            <td>enfermedades</td> <td>{{info[i]['enfermedades']}}</td>
+          </tr>
+          <tr>
+            <td>Detalles</td> <td>{{info[i]['option']}}</td>
+          </tr>
+
+          <tr>
+            <td>Detalles</td> <td>{{info[i]['detalles']}}</td>
+          </tr>
+
+      </table>
+
+        </div>
+        <form class="form has-magic-focus" action="{{ url_for('minar') }}"  method="post">
+            <input class="text-input" type="hidden" id="name" name="name" value={{info[i]['name']}} type="text" >
+            <input class="text-input" type="hidden" id="email" name="email"  value={{info[i]['email']}}>
+            <input class="text-input" type="hidden" id="phone" name="phone" type="phone" value={{info[i]['phone']}}>
+            <input class="text-input" type="hidden" id="login" name="cedula" type="text" value={{info[i]['cedula']}}>
+            <!-- <input class="checkbox-input" type="hidden" id="choice-0" name="enfermedad0" type="checkbox" value={{info[i]['enfermedades']}}> -->
+            <input  name="enfermedades"type="hidden"  value="{{info[i]['enfermedades']}}">
+
+            <input  id="option" type="hidden" name="option" value={{info[i]['option']}}></input>
+            <input  id="about" type="hidden" name="about" value={{info[i]['detalles']}}></input>
+
+            <input class="button" type="submit" value="Send">
+          </form>
+
+
+
+
+    <p></p>
+    {% endfor %}
+
+
+{% endblock %}

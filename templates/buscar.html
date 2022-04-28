@@ -1,0 +1,72 @@
+{% extends "menu.html" %}
+{% block title %}
+Bienvenido
+
+{% endblock %}
+{% block body %}
+
+<p>guardar</p>
+
+<form class="form has-magic-focus" action="{{ url_for('buscar') }}"  method="post">
+  <p >
+    <label class="label required" for="name">Nombre Completo</label>
+    <input class="text-input" id="name" name="name" type="text" >
+  </p>
+  <p >
+    <label class="label" for="login">Cedula</label>
+    <input class="text-input" id="login" name="cedula" type="text" >
+  </p>
+  <p >
+    <label class="label" for="login">Bloque indice</label>
+    <input class="text-input" id="login" name="indice" type="text" >
+ </p>
+  <p >
+    <input class="button" type="submit" value="Send">
+  </p>
+  <div class="magic-focus" style=""></div>
+</form>
+  <div id="block">
+
+    {% for i in range(bloques|length) %}
+      <!-- {{bloques['index']}}  ---   {{bloques['timestamp']}} --- {{bloques['previous_hash']}} --- {{bloques['own_hash']}} -->
+      <table>
+          <thead>
+            <tr>
+              <th >Block number:{{bloques[i]['index']}} </th><th >Timestamp: {{bloques[i]['timestamp']}} </th>
+            </tr>
+          </thead>
+          <tr>
+            <td>Previous Hash</td><td style="font-size: 10;">{{bloques[i]['previous_hash']}}</td>
+          </tr>
+          <tr>
+            <td>Own Hash</td><td style="font-size: 10;">{{bloques[i]['own_hash']}}</td>
+          </tr>
+
+          <tr>
+            <td>Name</td><td >{{info[i]['name']}}</td>
+          </tr>
+          <tr>
+            <td>e-mail</td><td >{{info[i]['email']}}</td>
+          </tr>
+          <tr>
+            <td>phone</td><td >{{info[i]['phone']}}</td>
+          </tr>
+          <tr>
+            <td>cedula</td><td >{{info[i]['cedula']}}</td>
+          </tr>
+          <tr>
+            <td>enfermedades</td> <td>{{info[i]['enfermedades']|join(', ')}}</td>
+          </tr>
+          <tr>
+            <td>Detalles</td> <td>{{info[i]['detalles']}}</td>
+          </tr>
+
+      </table>
+      <p></p>
+
+
+    <p></p>
+    {% endfor %}
+
+
+{% endblock %}

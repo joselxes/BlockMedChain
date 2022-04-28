@@ -1,0 +1,88 @@
+{% extends "menu.html" %}
+{% block title %}
+Guardar
+
+{% endblock %}
+{% block body %}
+<p>guardar</p>
+{% if success==1 %}
+  <p>Se agrego, para confirmacion</p>
+{% endif %}
+{% if success==0 %}
+  <p>Hubo un problema, cliente parece que ya existe el paciente</p>
+{% endif %}
+<form class="form has-magic-focus" action="{{ url_for('guardar') }}"  method="post">
+  <p class="field required">
+    <label class="label required" for="name">Nombre Completo</label>
+    <input class="text-input" id="name" name="name" required="" type="text" >
+  </p>
+  <p class="field required half">
+    <label class="label" for="email">E-mail</label>
+    <input class="text-input" id="email" name="email" required="" type="email">
+  </p>
+  <p class="field half">
+    <label class="label" for="phone">Phone</label>
+    <input class="text-input" id="phone" name="phone" type="phone">
+  </p>
+  <p class="field half required error">
+    <label class="label" for="login">Cedula</label>
+    <input class="text-input" id="login" name="cedula" required="" type="text" >
+  </p>
+  <div class="field">
+    <label class="label">Enfermedades</label>
+    <ul class="checkboxes">
+      <li class="checkbox">
+        <input class="checkbox-input" id="choice-0" name="enfermedad0" type="checkbox" value="Alergia a la penicilina">
+        <label class="checkbox-label" for="choice-0">Alergia a la penicilina</label>
+      </li>
+      <li class="checkbox">
+        <input class="checkbox-input" id="choice-1" name="enfermedad1" type="checkbox" value="Alergia con anticonvulsivos">
+        <label class="checkbox-label" for="choice-1">Alergia con anticonvulsivos</label>
+      </li>
+      <li class="checkbox">
+        <input class="checkbox-input" id="choice-2" name="enfermedad2" type="checkbox" value="Sufre de diabetes">
+        <label class="checkbox-label" for="choice-2">Sufre de diabetes</label>
+      </li>
+      <li class="checkbox">
+        <input class="checkbox-input" id="choice-3" name="enfermedad3" type="checkbox" value="Sufre de hipertensión">
+        <label class="checkbox-label" for="choice-3">Sufre de hipertensión</label>
+      </li>
+      <li class="checkbox">
+        <input class="checkbox-input" id="choice-4" name="enfermedad4" type="checkbox" value="Sufre de cancer">
+        <label class="checkbox-label" for="choice-4">Sufre de cancer</label>
+      </li>
+    </ul>
+  </div>
+  <div class="field">
+    <label class="label">Aptitudes</label>
+    <ul class="options">
+      <li class="option">
+        <input class="option-input" id="option-0" name="option" type="radio" value="Masculino">
+        <label class="option-label" for="option-0">Masculino</label>
+      </li>
+      <li class="option">
+        <input class="option-input" id="option-1" name="option" type="radio" value="Femenino">
+        <label class="option-label" for="option-1">Femenino</label>
+      </li>
+    </ul>
+  </div>
+  <p class="field">
+  <label class="label" for="about">Detalles extras, medicamentos, antencedentes</label>
+  <textarea class="textarea" cols="50" id="about" name="about" rows="4"></textarea>
+  </p>
+  <p class="field half">
+  <label class="label" for="select">Position</label>
+  <select class="select hasCustomSelect" id="select" style="-webkit-appearance: menulist-button; width: 399px; position: absolute; opacity: 0; height: 53px; font-size: 20px;">
+  <option selected="" value=""></option>
+  <option value="ceo">CEO</option>
+  <option value="front-end">Front-end developer</option>
+  <option value="back-end">Back-end developer</option>
+  </select><span class="customSelect select" style="display: inline-block;"><span class="customSelectInner" style="width: 359px; display: inline-block;">&nbsp;</span></span>
+  </p>
+  <p class="field half">
+  <input class="button" type="submit" value="Send">
+  </p>
+  <div class="magic-focus" style=""></div>
+</form>
+
+{% endblock %}

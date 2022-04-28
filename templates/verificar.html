@@ -1,0 +1,95 @@
+{% extends "menu.html" %}
+{% block title %}
+Bienvenido
+
+{% endblock %}
+{% block body %}
+
+<p>guardar</p>
+
+  <div id="block">
+  {% if var==0 %}
+    <p>Se agrego, para confirmacion {{h}}</p>
+    <table>
+        <thead>
+          <tr>
+            <th >Block number:{{bloques['index']}} </th><th >Timestamp: {{bloques['timestamp']}} </th>
+          </tr>
+        </thead>
+        <tr>
+          <td>Previous Hash</td><td style="font-size: 10;">{{bloques['previous_hash']}}</td>
+        </tr>
+        <tr>
+          <td>Own Hash</td><td style="font-size: 10;">{{bloques['own_hash']}}</td>
+        </tr>
+        <tr>
+          <td>Name</td><td >{{info['name']}}</td>
+        </tr>
+        <tr>
+          <td>e-mail</td><td >{{info['email']}}</td>
+        </tr>
+        <tr>
+          <td>phone</td><td >{{info['phone']}}</td>
+        </tr>
+        <tr>
+          <td>cedula</td><td >{{info['cedula']}}</td>
+        </tr>
+        <tr>
+          <td>enfermedades</td> <td>{{info['enfermedades']|join(', ')}}</td>
+        </tr>
+        <tr>
+          <td>Detalles</td> <td>{{info['detalles']}}</td>
+        </tr>
+
+
+    </table>
+  {% endif %}
+  {% if var==1 %}
+    {% for i in range(bloques|length) %}
+      <!-- {{bloques['index']}}  ---   {{bloques['timestamp']}} --- {{bloques['previous_hash']}} --- {{bloques['own_hash']}} -->
+      <table>
+          <thead>
+            <tr>
+              <th >Block number:{{bloques[i]['index']}} </th><th >Timestamp: {{bloques[i]['timestamp']}} </th>
+            </tr>
+          </thead>
+          <tr>
+            <td>Previous Hash</td><td style="font-size: 10;">{{bloques[i]['previous_hash']}}</td>
+          </tr>
+          <tr>
+            <td>Own Hash</td><td style="font-size: 10;">{{bloques[i]['own_hash']}}</td>
+          </tr>
+
+          <tr>
+            <td>Name</td><td >{{info[i]['name']}}</td>
+          </tr>
+          <tr>
+            <td>e-mail</td><td >{{info[i]['email']}}</td>
+          </tr>
+          <tr>
+            <td>phone</td><td >{{info[i]['phone']}}</td>
+          </tr>
+          <tr>
+            <td>cedula</td><td >{{info[i]['cedula']}}</td>
+          </tr>
+          <tr>
+            <td>enfermedades</td> <td>{{info[i]['enfermedades']|join(', ')}}</td>
+          </tr>
+          <tr>
+            <td>Detalles</td> <td>{{info[i]['detalles']}}</td>
+          </tr>
+
+      </table>
+      <form class="form has-magic-focus" action="{{ url_for('verificar') }}"  method="post">
+          <input class="text-input" type="hidden" id="name" name="name" value={{bloques[i]['index']}}  type="text" >
+          <input class="button" type="submit" value="Send">
+        </form>
+
+      <p></p>
+
+
+    <p></p>
+    {% endfor %}
+  {% endif %}
+
+{% endblock %}
