@@ -5,12 +5,13 @@ Bienvenido
 {% endblock %}
 {% block body %}
 
-<p>guardar</p>
+<h2 class="espacio">Comprobar datos</h2>   
+<h3 class="espacio">Realizar Hash del bloque.</h3>
 
   <div id="block">
   {% if var==0 %}
     <p>Se agrego, para confirmacion {{h}}</p>
-    <table>
+    <table class="espacio">
         <thead>
           <tr>
             <th >Block number:{{bloques['index']}} </th><th >Timestamp: {{bloques['timestamp']}} </th>
@@ -47,7 +48,7 @@ Bienvenido
   {% if var==1 %}
     {% for i in range(bloques|length) %}
       <!-- {{bloques['index']}}  ---   {{bloques['timestamp']}} --- {{bloques['previous_hash']}} --- {{bloques['own_hash']}} -->
-      <table>
+      <table class="masEsp">
           <thead>
             <tr>
               <th >Block number:{{bloques[i]['index']}} </th><th >Timestamp: {{bloques[i]['timestamp']}} </th>
@@ -80,15 +81,19 @@ Bienvenido
           </tr>
 
       </table>
-      <form class="form has-magic-focus" action="{{ url_for('verificar') }}"  method="post">
-          <input class="text-input" type="hidden" id="name" name="name" value={{bloques[i]['index']}}  type="text" >
-          <input class="button" type="submit" value="Send">
+
+        <form class="form-group masEsp" action="{{ url_for('verificar') }}"  method="post">
+          <input class="text-input" type="hidden" id="name" name="name" value="{{bloques[i]['index'] }}" type="text" >
+          <button type="submit" class="btn btn-primary espacio"  value="Send">Submit</button>
         </form>
 
-      <p></p>
+        
 
 
-    <p></p>
+
+        
+
+        
     {% endfor %}
   {% endif %}
 

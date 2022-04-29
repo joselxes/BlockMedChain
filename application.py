@@ -138,7 +138,7 @@ def verificar():
         list=[]
         h=bc.chain[int(name["name"])].verificarHash()
         for i in indexTodos:
-            if int(name["name"])== i["indice"]:
+            if int(name["name"])-1== i["indice"]:
                 # list=i
                 for j in clientesTodos:
                     if j["cedula"]==i["cedula"]:

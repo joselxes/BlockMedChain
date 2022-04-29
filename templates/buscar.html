@@ -18,11 +18,11 @@ Bienvenido
     <input class="form-control tam" id="login" name="cedula" type="text"placeholder="Solo numeros de 10 digitos" pattern="[0-9]*" minlength="10" >
 </div>
 
-<div class="form-group">
-    <label class="label espacio" for="login">Bloque indice</label>
+<div class="form-group ">
+    <label class="label" for="login">Bloque indice</label>
     <input class="form-control tam"  id="login" name="indice" min="0" type="number" placeholder="Solo numeros positivos">    
   </div>
-    <button type="submit" class="btn btn-primary espacio" pla>Submit</button>
+    <button type="submit" class="btn btn-primary espacio" >Submit</button>
 </form>
 
   <div id="block">
@@ -30,7 +30,7 @@ Bienvenido
 
     {% for i in range(bloques|length) %}
       <!-- {{bloques['index']}}  ---   {{bloques['timestamp']}} --- {{bloques['previous_hash']}} --- {{bloques['own_hash']}} -->
-      <table>
+      <table class="masEsp">
           <thead>
             <tr>
               <th >Block number:{{bloques[i]['index']}} </th><th >Timestamp: {{bloques[i]['timestamp']}} </th>
