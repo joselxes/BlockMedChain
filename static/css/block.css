@@ -28,3 +28,13 @@ tr:hover td{
   background-color:#369681;
   color: white;
 }
+
+
+.tam,.letras,.espacio{
+
+  margin: 10px;
+}
+.letras,.tam{
+  width: 400px;
+
+}

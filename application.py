@@ -6,7 +6,9 @@ import d
 from blockchain import Block, Blockchain
 bc = Blockchain()
 
-# from flask_socketio import SocketIO, emit
+# creo clientes base
+
+
 clientesTodos=[{"name": 'GENESIS', "email": 'med@usa.com', "phone": '911', "cedula": '9999999999', "enfermedades": ['todos'], "option": 'Agencia', "detalles": 'cualquier informacion 911'},
 {"name": 'Jean Sotelo', "email": 'js@outlook.com', "phone": '67866786789', "cedula": '4444444444', "enfermedades": ['Alergia a la penicilina'], "option": 'Masculino', "detalles": 'Historial de paros cardiacos'},
 {"name": 'Paco Gerlo', "email": 'teienoToyo@gmail.com', "phone": '1112224444', "cedula": '1111111111', "enfermedades": ['Alergia a la penicilina, Alergia con anticonvulsivos, Sufre de diabetes'], "option": 'Masculino', "detalles": 'Sufre de narcolepsia'},
@@ -15,6 +17,7 @@ clientesTodos=[{"name": 'GENESIS', "email": 'med@usa.com', "phone": '911', "cedu
 # print(clientesTodos[0])
 # print(d.dicTostring(clientesTodos[0]))
 
+bc.add_block(d.dicTostring(clientesTodos[0]))
 bc.add_block(d.dicTostring(clientesTodos[1]))
 bc.add_block(d.dicTostring(clientesTodos[2]))
 bc.add_block(d.dicTostring(clientesTodos[3]))
@@ -22,7 +25,7 @@ bc.unconfirmed_transactions.append({"name": 'Frank Mill', "email": 'arres@gmail.
 print(d.dicTostring(clientesTodos[3]))
 # print("-----------")
 # bc.chain[-1].print_bloque()
-indexTodos=[{"indice":0,"cedula":"incio"},
+indexTodos=[{"indice":0,"cedula":"9999999999"},
 {"indice":1, "cedula": '4444444444'},
 {"indice":2, "cedula": '1111111111'},
 {"indice":3, "cedula": '8888888888'},
@@ -34,32 +37,47 @@ def index():
     return render_template("bienvenido.html")
 @app.route("/buscar",methods=["GET","POST"])
 def buscar():
+    print("BUSCAR")
     indices=[]
     bloques=[]
     info=[]
+    indiceTemp=0
     if request.form.get("name") is not None:
         name=request.form
+        print(name)
         if name["name"]=="todos":
-            return render_template("buscar.html",bloques=bc.chain,info=clientesTodos)
-            # info=indexTodos
-            # bloques=bc.chain
+            bloques=bc.chain[1:]
+            info=clientesTodos
+
         else:
             """primero obtengo indice  con el nombre"""
-            indiceNombre=d.getIndex(d.getCedula(name,clientesTodos),indexTodos)
+            indiceNombre=d.getCedula(name["name"],clientesTodos)
             """segundo obtengo indice  con el nombre"""
             indiceCedula=d.getIndex(name["cedula"],indexTodos)
             """tercero obtengo indice por indice"""
-            indiceTemp=int(name["indice"])
-            indices=d.listaBusqueda(indiceNombre,indiceCedula,indiceTemp)
 
+            if (""==name["indice"]):
+                print("kkkkkkkkkkkkk")
+                indiceTemp=-1
+            else:
+                indiceTemp=int(name["indice"])-1
+                if indiceTemp>len(clientesTodos):
+                    indiceTemp=-1
+            print("------------",indiceNombre,indiceCedula,indiceTemp)
+
+            indices=d.listaBusqueda([indiceNombre,indiceCedula,indiceTemp])
+            print(len(bc.chain),len(clientesTodos))
             if len(indices)>0:
                 for i in indices:
-                    bTemp=bc.searchIndex(i)
+                    print(i)
+                    bTemp=bc.searchIndex(i+1)
                     bloques.append(bTemp)
                     bloques[-1].print_bloque()
-                    info.append(d.getInfo(i,indexTodos,clientesTodos))
-                print(bloques)
-                print(info)
+                    info.append(clientesTodos[i])
+                    print("-------",clientesTodos[-1],"-------")
+                    print("-------",bTemp,"-------")
+                # print(bloques)
+                # print(info)
     return render_template("buscar.html",bloques=bloques,info=info)
 @app.route("/guardar",methods=["GET","POST"])
 def guardar():
@@ -123,7 +141,7 @@ def verificar():
         # d.getInfo(i,indexTodos,clientesTodos)
 
 
-    return render_template("verificar.html",var=1,bloques=bc.chain,info=clientesTodos)
+    return render_template("verificar.html",var=1,bloques=bc.chain[1:],info=clientesTodos)
 
 
 

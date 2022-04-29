@@ -7,25 +7,26 @@ Bienvenido
 
 <p>guardar</p>
 
-<form class="form has-magic-focus" action="{{ url_for('buscar') }}"  method="post">
-  <p >
-    <label class="label required" for="name">Nombre Completo</label>
-    <input class="text-input" id="name" name="name" type="text" >
-  </p>
-  <p >
-    <label class="label" for="login">Cedula</label>
-    <input class="text-input" id="login" name="cedula" type="text" >
-  </p>
-  <p >
-    <label class="label" for="login">Bloque indice</label>
-    <input class="text-input" id="login" name="indice" type="text" >
- </p>
-  <p >
-    <input class="button" type="submit" value="Send">
-  </p>
-  <div class="magic-focus" style=""></div>
+<form class="form-group" action="{{ url_for('buscar') }}"  method="post">
+  <div class="form-group">
+  <label class="label required espacio" for="name">Nombre Completo</label>
+    <input class="form-control letras" id="name" name="name" type="text" pattern="[a-zA-Z]*"  placeholder="Solo letras">
+  </div>
+  
+  <div class="form-group">
+    <label class="label espacio" for="login">Cedula</label>
+    <input class="form-control tam" id="login" name="cedula" type="text"placeholder="Solo numeros de 10 digitos" pattern="[0-9]*" minlength="10" >
+</div>
+
+<div class="form-group">
+    <label class="label espacio" for="login">Bloque indice</label>
+    <input class="form-control tam"  id="login" name="indice" min="0" type="number" placeholder="Solo numeros positivos">    
+  </div>
+    <button type="submit" class="btn btn-primary espacio" pla>Submit</button>
 </form>
+
   <div id="block">
+
 
     {% for i in range(bloques|length) %}
       <!-- {{bloques['index']}}  ---   {{bloques['timestamp']}} --- {{bloques['previous_hash']}} --- {{bloques['own_hash']}} -->

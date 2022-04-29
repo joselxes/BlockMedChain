@@ -16,39 +16,33 @@ def dicTostring(diccionario):
 def existe(nuevo,todo):
     for i in todo:
         if i["cedula"]==nuevo["cedula"]:
+            print(i+1,"xxxx")
             return False
     return True
             # print("ya existe wey")
     #realizo operacion de acurdo a la varibale de si existe o no
-def getCedula(nuevo,todo):
-    for i in todo:
-        if i["name"]==nuevo["name"]:
-            return i["cedula"]
-    return "False"
+def getCedula(nombre,todo):
+    for i in range(0,len(todo)):
+        print(i,todo[i])
+        if todo[i]["name"]==nombre:
+            return i
+    return -1
 def getIndex(cedula,listaIndices):
-    if cedula=="False":
-        return "False"
-    for i in listaIndices:
-        if i["cedula"]==cedula:
-            return i["indice"]
-    return "False"
-def getInfo(indice,listaIndices,listadiccionarios):
-    for i in listaIndices:
-        if i["indice"]==indice:
-            for j in listadiccionarios:
-                if j["cedula"]==i["cedula"]:
-                    return j
-    return "False"
-def listaBusqueda(a,b,c):
-    rLista=[]
-    if not(a=="False"):
-        rLista.append(a)
-    if not(b=="False"):
-        if not(b in rLista):
-            rLista.append(b)
-    if not(c in rLista):
-        rLista.append(c)
+    for i in range(0,len(listaIndices)):
+        if cedula== listaIndices[i]["cedula"]:
+            return i
 
+    return -1
+# def getInfo(indice,listaIndices,listadiccionarios):
+#     for i in listaIndices:
+
+#         return j
+#     return "False"
+def listaBusqueda(indicesSearch):
+    rLista=[]
+    for i in indicesSearch:
+        if i>=0:
+            rLista.append(i)
     return rLista
 
 def nuevoTodict(diccionario):
@@ -65,3 +59,9 @@ def getListFromDict(diccionario):
         if type(diccionario[i])==type([]):
             dis.append(diccionario[i])
     return dis
+
+
+# {'name': 'GENESIS', 'email': 'med@usa.com', 'phone': '911', 'cedula': '9999999999', 'enfermedades': ['todos'], 'option': 'Agencia', 'detalles': 'cualquier informacion 911'},
+#  {'name': 'Jean Sotelo', 'email': 'js@outlook.com', 'phone': '67866786789', 'cedula': '4444444444', 'enfermedades': ['Alergia a la penicilina'], 'option': 'Masculino', 'detalles': 'Historial de paros cardiacos'},
+#   {'name': 'Paco Gerlo', 'email': 'teienoToyo@gmail.com', 'phone': '1112224444', 'cedula': '1111111111', 'enfermedades': ['Alergia a la penicilina, Alergia con anticonvulsivos, Sufre de diabetes'], 'option': 'Masculino', 'detalles': 'Sufre de narcolepsia'}, 
+#   {'name': 'Jack Hallate', 'email': 'Dolores@gmail.com', 'phone': '4556778899', 'cedula': '8888888888', 'enfermedades': ['Alergia con anticonvulsivos, Sufre de diabetes'], 'option': 'Femenino', 'detalles': 'En quimioterapia'}]
