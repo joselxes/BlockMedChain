@@ -81,6 +81,8 @@ def buscar():
     return render_template("buscar.html",bloques=bloques,info=info)
 @app.route("/guardar",methods=["GET","POST"])
 def guardar():
+    exito=0
+    print(request.form.get("name"))
     if request.form.get("name") is not None:
         name=request.form
         print(name)
@@ -93,11 +95,15 @@ def guardar():
             newCliente["enfermedades"]=",".join(newCliente["enfermedades"])
             bc.unconfirmed_transactions.append(newCliente)
             print(bc.unconfirmed_transactions)
-            return render_template("guardar.html",success=1)
+            exito=1
+
         else:
             print("existe")
+            exito=0
 
-    return render_template("guardar.html",success=0)
+    else:
+        exito=2    
+    return render_template("guardar.html",success=exito)
 @app.route("/minar",methods=["GET","POST"])
 def minar():
     if len(bc.unconfirmed_transactions)==0 and (request.form.get("name") is None):
