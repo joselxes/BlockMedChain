@@ -1,2 +1,20 @@
+*Libraries
 Flask
-Flask-SocketIO
+from hashlib import sha256
+import json
+import time
+
+*to run
+-export FLASK_APP=application.py
+-flask run
+
+*if debug mode
+-export FLASK_DEBUG=1
+
+
+
+
+
+
+
+
