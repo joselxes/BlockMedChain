@@ -30,12 +30,14 @@ class Block:
         return sha256(block_string.encode()).hexdigest()
 
     def print_bloque(self):
+        print("----------------------------")
         print("index",self.index)
         print("transactions",self.transactions)
         print("timestamp",self.timestamp)
         print("previous_hash",self.previous_hash)
         print("own_hash",self.own_hash)
         print("nonce",self.nonce)
+        print("----------------------------")
         return 0
 #
 class Blockchain:

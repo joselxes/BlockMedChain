@@ -13,12 +13,18 @@ def dicTostring(diccionario):
     # reviso si existe el cliente o no para "agregarlo"
     # print(st)
     return clientData
+def indexExist(nuevo,todo):
+    # busqueda por indice, si este existe o no 
+    if nuevo>-1 and nuevo<len(todo):
+        if todo[nuevo]["indice"]==nuevo:
+            return True
+    return False
 def existe(nuevo,todo):
     for i in todo:
         if i["cedula"]==nuevo["cedula"]:
-            print(i+1,"xxxx")
-            return False
-    return True
+            # print(i+1,"xxxx")
+            return True
+    return False
             # print("ya existe wey")
     #realizo operacion de acurdo a la varibale de si existe o no
 def getCedula(nombre,todo):

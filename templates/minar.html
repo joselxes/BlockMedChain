@@ -5,12 +5,19 @@ Bienvenido
 {% endblock %}
 {% block body %}
 
-<h2 class="espacio">Pacientes en espera </h2>   
-<h3 class="espacio">Seleccionar uno para confirmar</h3>
-  <div id="block">
+
+{% if success==0 %}
+  <h2 class="espacio">No Hay Pacientes en Espera </h2>   
+  <h3 class="espacio">En la pestana guardar puedes incluir nuevos pacientes.</h3>
+{% elif success==1 %}
+  <h2 class="espacio">Pacientes en espera </h2>   
+  <h3 class="espacio">Selecciona uno para registrarlo en cadena.</h3>
+{% endif%}
+
+<div id="block" class="espacio">
 
     {% for i in range(info|length) %}
-      <table>
+      <table >
           <thead>
             <tr>
               <th >Block number:--indifenido--</th><th >Timestamp: --indifenido-- </th>
@@ -47,26 +54,23 @@ Bienvenido
 
       </table>
 
-        </div>
-        <form class="form has-magic-focus" action="{{ url_for('minar') }}"  method="post">
-            <input class="text-input" type="hidden" id="name" name="name" value={{info[i]['name']}} type="text" >
-            <input class="text-input" type="hidden" id="email" name="email"  value={{info[i]['email']}}>
-            <input class="text-input" type="hidden" id="phone" name="phone" type="phone" value={{info[i]['phone']}}>
-            <input class="text-input" type="hidden" id="login" name="cedula" type="text" value={{info[i]['cedula']}}>
+
+        <form class="form-group masEsp" action="{{ url_for('minar') }}"  method="post">
+            <input class="text-input" type="hidden" id="name" name="name" value="{{info[i]['name']}}" type="text" >
+            <input class="text-input" type="hidden" id="email" name="email"  value="{{info[i]['email']}}">
+            <input class="text-input" type="hidden" id="phone" name="phone" type="phone" value="{{info[i]['phone']}}">
+            <input class="text-input" type="hidden" id="login" name="cedula" type="text" value="{{info[i]['cedula']}}">
             <!-- <input class="checkbox-input" type="hidden" id="choice-0" name="enfermedad0" type="checkbox" value={{info[i]['enfermedades']}}> -->
             <input  name="enfermedades"type="hidden"  value="{{info[i]['enfermedades']}}">
 
-            <input  id="option" type="hidden" name="option" value={{info[i]['option']}}></input>
-            <input  id="about" type="hidden" name="about" value={{info[i]['detalles']}}></input>
+            <input  id="option" type="hidden" name="option" value="{{info[i]['option']}}"></input>
+            <input  id="about" type="hidden" name="about" value="{{info[i]['detalles']}}"></input>
 
-            <input class="button" type="submit" value="Send">
+            <button type="submit" class="btn btn-primary espacio"  value="Send">Registrar</button>
           </form>
 
 
-
-
-    <p></p>
     {% endfor %}
-
+  </div>
 
 {% endblock %}

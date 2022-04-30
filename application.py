@@ -81,6 +81,7 @@ def buscar():
     return render_template("buscar.html",bloques=bloques,info=info)
 @app.route("/guardar",methods=["GET","POST"])
 def guardar():
+    print("------------- GUARDAR ----------------------")
     exito=0
     print(request.form.get("name"))
     if request.form.get("name") is not None:
@@ -88,15 +89,18 @@ def guardar():
         print(name)
         # # creo lista de las enfermedades recibidas en la forma
         newCliente=d.nuevoTodict(name)
-        print(newCliente)
+        print(newCliente,name)
         # # reviso si existe el cliente o no para "agregarlo"
-        if d.existe(name,clientesTodos) and d.existe(name,bc.unconfirmed_transactions):
-            print("no hay, no existe")
-            newCliente["enfermedades"]=",".join(newCliente["enfermedades"])
-            bc.unconfirmed_transactions.append(newCliente)
-            print(bc.unconfirmed_transactions)
-            exito=1
-
+        if not d.existe(name,clientesTodos): 
+            if not ( d.existe(name,bc.unconfirmed_transactions)):
+                print("no hay, no existe")
+                newCliente["enfermedades"]=",".join(newCliente["enfermedades"])
+                bc.unconfirmed_transactions.append(newCliente)
+                print(bc.unconfirmed_transactions)
+                exito=1
+            else:
+                print("existe")
+                exito=0
         else:
             print("existe")
             exito=0
@@ -106,48 +110,53 @@ def guardar():
     return render_template("guardar.html",success=exito)
 @app.route("/minar",methods=["GET","POST"])
 def minar():
+    print("------------- MINAR ----------------------")
+    varTransac=1
     if len(bc.unconfirmed_transactions)==0 and (request.form.get("name") is None):
         return render_template("minar.html",success=1)
     if request.form.get("name") is not None:
         name=request.form
+        print(name)
         newCliente=d.nuevoTodict(name)
         # # reviso si existe el cliente o no para "agregarlo"
 
-        if d.existe(name,clientesTodos) :
+        if not d.existe(name,clientesTodos) :
             print("no hay, no existe")
             clientData=d.dicTostring(newCliente)
             bc.add_block(clientData)
             clientesTodos.append(newCliente)
-            indexTodos.append({"indice":bc.chain[-1].index,"cedula":newCliente["cedula"]})
+            indexTodos.append({"indice":bc.chain[-1].index-1,"cedula":newCliente["cedula"]})
             bc.printChainConfirmed()
             for i in range(len(bc.unconfirmed_transactions)):
                 if bc.unconfirmed_transactions[i]["cedula"]==name["cedula"]:
                     bc.unconfirmed_transactions.pop(i)
-                    # temp=bc.unconfirmed_transactions[i+1:]
-                    # bc.unconfirmed_transactions=bc.unconfirmed_transactions[0:i]
-                    # if len(temp)!=0:
-                    #     bc.unconfirmed_transactions.join(temp)
+    if len(bc.unconfirmed_transactions)==0:
+        varTransac=0
 
-            print(clientData)
 
-    return render_template("minar.html",success=0,info=bc.unconfirmed_transactions)
+    return render_template("minar.html",success=varTransac,info=bc.unconfirmed_transactions)
 @app.route("/verificar",methods=["GET","POST"])
 def verificar():
+    print("------------- VERIFICAR ----------------------")
+    print(request.form.get("name"))
+    varText=1
+    h=""
     if request.form.get("name") is not None:
+
         name=request.form
-        list=[]
-        h=bc.chain[int(name["name"])].verificarHash()
-        for i in indexTodos:
-            if int(name["name"])-1== i["indice"]:
-                # list=i
-                for j in clientesTodos:
-                    if j["cedula"]==i["cedula"]:
-                        # list=j
-                        return render_template("verificar.html",var=0,bloques=bc.chain[int(name["name"])],info=j,h=h)
-        # d.getInfo(i,indexTodos,clientesTodos)
+        ind=int(name["name"])
+        flagVerificacion= d.indexExist(ind-1,indexTodos)
+        if flagVerificacion:
 
+            flagVerificacion=d.existe(indexTodos[ind-1], clientesTodos )
+            if flagVerificacion:
+                h=bc.chain[ind].verificarHash()                
+                print("----------", h)      
+                bc.chain[ind].print_bloque()
+                varText=0
+                return render_template("verificar.html",var=varText,bloques=bc.chain[ind],info=clientesTodos[ind-1],h=h)
 
-    return render_template("verificar.html",var=1,bloques=bc.chain[1:],info=clientesTodos)
+    return render_template("verificar.html",var=varText,bloques=bc.chain[1:],info=clientesTodos,h=h)
 
 
 
