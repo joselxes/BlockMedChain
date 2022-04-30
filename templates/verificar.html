@@ -5,13 +5,13 @@ Bienvenido
 {% endblock %}
 {% block body %}
 
-<h2 class="espacio">Comprobar datos</h2>   
-<h3 class="espacio">Realizar Hash del bloque.</h3>
 
   <div id="block">
   {% if var==0 %}
+    <h2 class="espacio">Seleccionado bloque {{bloques['index']}} </h2>   
+    <h3 class="espacio">El hash del bloque es el siguiente:</h3>  
+    <p class="espacio"> {{h}}</p>
 
-  <p>Se agrego, para confirmacion {{h}}</p>
     <table class="espacio">
         <thead>
           <tr>
@@ -42,9 +42,25 @@ Bienvenido
         <tr>
           <td>Detalles</td> <td>{{info['detalles']}}</td>
         </tr>
-
-
     </table>
+
+      <br>
+      <br>
+      {% if success %}
+        <h3 class="espacio">Archivo verificado informacion relaiable.</h3>  
+        <div class="success">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          <strong>Success!</strong> Archivo sin fallos, el hash realizado coincide con el actual.
+        </div>
+      {% else %}
+        <h3 class="espacio">Archivo corrupto, informacion alterada.</h3>  
+        <div class="alert">
+          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+          <strong>Danger!</strong> Problema en Archivo, Hash no coincide.
+        </div>
+      {% endif %}
+      <br>
+      <br>
   {% endif %}
   {% if var==1 %}
     {% for i in range(bloques|length) %}

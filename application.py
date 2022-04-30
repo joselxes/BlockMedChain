@@ -151,10 +151,12 @@ def verificar():
             flagVerificacion=d.existe(indexTodos[ind-1], clientesTodos )
             if flagVerificacion:
                 h=bc.chain[ind].verificarHash()                
-                print("----------", h)      
+                # print("----------\n", h,"\n",bc.chain[ind].own_hash)      
                 bc.chain[ind].print_bloque()
                 varText=0
-                return render_template("verificar.html",var=varText,bloques=bc.chain[ind],info=clientesTodos[ind-1],h=h)
+                success= h==bc.chain[ind].own_hash
+                # print(success)
+                return render_template("verificar.html",success=success,var=varText,bloques=bc.chain[ind],info=clientesTodos[ind-1],h=h)
 
     return render_template("verificar.html",var=varText,bloques=bc.chain[1:],info=clientesTodos,h=h)
 
